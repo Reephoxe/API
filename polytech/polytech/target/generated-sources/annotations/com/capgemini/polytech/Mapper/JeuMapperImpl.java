@@ -19,7 +19,7 @@ public class JeuMapperImpl implements JeuMapper {
 
         JeuDTO.JeuDTOBuilder jeuDTO = JeuDTO.builder();
 
-        jeuDTO.jeuxId( jeu.getJeuxId() );
+        jeuDTO.id( jeu.getId() );
         jeuDTO.nom( jeu.getNom() );
         jeuDTO.quantite( jeu.getQuantite() );
         jeuDTO.description( jeu.getDescription() );
@@ -36,8 +36,8 @@ public class JeuMapperImpl implements JeuMapper {
 
         Jeu.JeuBuilder jeu = Jeu.builder();
 
-        if ( jeuDTO.getJeuxId() != null ) {
-            jeu.jeuxId( jeuDTO.getJeuxId() );
+        if ( jeuDTO.getId() != null ) {
+            jeu.id( jeuDTO.getId() );
         }
         jeu.nom( jeuDTO.getNom() );
         jeu.quantite( jeuDTO.getQuantite() );

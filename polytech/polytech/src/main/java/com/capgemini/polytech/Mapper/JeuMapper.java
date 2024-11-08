@@ -10,6 +10,5 @@ public interface JeuMapper {
 
     JeuDTO toDTO(Jeu jeu);
 
-
     Jeu toEntity(JeuDTO jeuDTO);
 }
