@@ -25,7 +25,9 @@ public class ReservationController {
         this.reservationMapper = reservationMapper;
     }
 
-    public List<ReservationDTO> getList() {
+    //GET localhost:8080/Controller
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<ReservationDTO> getListReservation() {
     List<ReservationDTO> listReservationDTO = new ArrayList<>();
     List<Reservation> listReservations = this.reservationService.getList();
     for (Reservation reservation : listReservations) {
@@ -34,19 +36,27 @@ public class ReservationController {
     return listReservationDTO;
     }
 
-    public ReservationDTO getById(int id) {
+    //GET localhost:8080/Controller/1
+    @GetMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ReservationDTO getByIdReservation(@PathVariable Integer id) {
         return this.reservationMapper.toDTO(this.reservationService.getById(id));
     }
 
-    public void create(ReservationDTO newReservation) {
+    //
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public void createReservation(ReservationDTO newReservation) {
         this.reservationService.createReservation(this.reservationMapper.toEntity(newReservation));
     }
 
-    public void update(int id, ReservationDTO newReservation) {
+    //
+    @PutMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public void updateReservation(@PathVariable Integer id, ReservationDTO newReservation) {
         this.reservationService.updateReservation(id, this.reservationMapper.toEntity(newReservation));
     }
 
-    public void delete(int id) {
+    //DELETE localhost:8080/Controller?id=1
+    @DeleteMapping
+    public void deleteReservation(Integer id) {
         this.reservationService.deleteReservation(id);
     }
 

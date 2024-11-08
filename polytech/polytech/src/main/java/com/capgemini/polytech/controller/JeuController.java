@@ -5,13 +5,9 @@ import com.capgemini.polytech.DTO.JeuDTO;
 import com.capgemini.polytech.Mapper.JeuMapper;
 import com.capgemini.polytech.entity.Jeu;
 import com.capgemini.polytech.service.JeuService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
 
 import java.util.ArrayList;
@@ -31,8 +27,9 @@ public class JeuController  {
         this.jeuService = jeuService;
     }
 
+    //GET localhost:8080/Jeu
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<JeuDTO> getList(){
+    public List<JeuDTO> getListJeu(){
         List<JeuDTO> listJeuDTO = new ArrayList<>();
         List<Jeu> listJeu = this.jeuService.getList();
         for(Jeu jeu : listJeu){
@@ -41,23 +38,27 @@ public class JeuController  {
         return listJeuDTO;
     }
 
+    //GET localhost:8080/Jeu/39
     @GetMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public JeuDTO getById(int id){
+    public JeuDTO getByIdJeu(@PathVariable Integer id){
         return this.jeuMapper.toDTO(this.jeuService.getById(id));
     }
 
+    //
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public void createJeu(JeuDTO jeuDTO){
+    public void createJeu(@RequestBody JeuDTO jeuDTO){
         this.jeuService.createJeu(this.jeuMapper.toEntity(jeuDTO));
     }
 
+    //
     @PutMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public void updateJeu(int id, JeuDTO jeuDTO){
+    public void updateJeu(@PathVariable Integer id, JeuDTO jeuDTO){
         this.jeuService.updateJeu(id, this.jeuMapper.toEntity(jeuDTO));
     }
 
+    //DELETE localhost:8080/Jeu?id=38
     @DeleteMapping
-    public void deleteJeu(int id){
+    public void deleteJeu(@RequestParam Integer id){
         this.jeuService.deleteJeu(id);
     }
 
