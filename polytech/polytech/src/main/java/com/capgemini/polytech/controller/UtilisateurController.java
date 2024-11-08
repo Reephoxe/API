@@ -21,6 +21,7 @@ public class UtilisateurController {
         utilisateurService = CopieUtilisateurService;
     }
 
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<UtilisateurDTO> getList() {
         List<Utilisateur> liste = this.utilisateurService.getList();
         List<UtilisateurDTO> listeDTO = new ArrayList<UtilisateurDTO>();
@@ -30,18 +31,22 @@ public class UtilisateurController {
         return listeDTO;
     }
 
+    @GetMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public UtilisateurDTO getById(Integer id) {
         return this.utilisateurMapper.toDTO(this.utilisateurService.getById(id));
     }
 
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public void create(Utilisateur NewUtilisateur){
         this.utilisateurService.createUtilisateur(NewUtilisateur);
     }
 
+    @PutMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public void update(Integer id, UtilisateurDTO NewValue){
         this.utilisateurService.updateUtilisateur(id, this.utilisateurMapper.toEntity(NewValue));
     }
 
+    @DeleteMapping
     public void delete(Integer id) {
         this.utilisateurService.deleteUtilisateur(id);
     }
