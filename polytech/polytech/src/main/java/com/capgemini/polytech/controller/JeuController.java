@@ -7,6 +7,8 @@ import com.capgemini.polytech.entity.Jeu;
 import com.capgemini.polytech.service.JeuService;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
 
@@ -46,14 +48,16 @@ public class JeuController  {
 
     //
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public void createJeu(@RequestBody JeuDTO jeuDTO){
+    public ResponseEntity<JeuDTO> createJeu(@RequestBody JeuDTO jeuDTO){
         this.jeuService.createJeu(this.jeuMapper.toEntity(jeuDTO));
+        return new ResponseEntity<>(jeuDTO, HttpStatus.CREATED);
     }
 
     //
     @PutMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public void updateJeu(@PathVariable Integer id, JeuDTO jeuDTO){
+    public ResponseEntity<JeuDTO> updateJeu(@PathVariable Integer id, JeuDTO jeuDTO){
         this.jeuService.updateJeu(id, this.jeuMapper.toEntity(jeuDTO));
+        return new ResponseEntity<>(jeuDTO, HttpStatus.OK);
     }
 
     //DELETE localhost:8080/Jeu?id=38
