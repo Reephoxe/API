@@ -1,6 +1,8 @@
 package com.capgemini.polytech.service;
 
 import com.capgemini.polytech.entity.Reservation;
+import com.capgemini.polytech.exception.JeuNotFoundException;
+import com.capgemini.polytech.exception.ReservationNotFoundException;
 import com.capgemini.polytech.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -18,7 +20,7 @@ public class ReservationService {
     }
 
     public Reservation getById(Integer id) {
-        return reservationRepository.findById(id).orElseThrow();
+        return reservationRepository.findById(id).orElseThrow(() -> new JeuNotFoundException(id));
     }
 
     public Reservation createReservation(Reservation reservation) {
@@ -28,7 +30,7 @@ public class ReservationService {
     public Reservation updateReservation(Integer id, Reservation reservation) {
         return this.reservationRepository.findById(id).map(
                 e -> this.reservationRepository.save(reservation)
-        ).orElseThrow();
+        ).orElseThrow(() -> new ReservationNotFoundException(id));
     }
 
     public void deleteReservation(Integer id) {
@@ -37,7 +39,7 @@ public class ReservationService {
                     this.reservationRepository.delete(e);
                     return e;
                 }
-        ).orElseThrow();
+        ).orElseThrow(() -> new JeuNotFoundException(id));
     }
 
 

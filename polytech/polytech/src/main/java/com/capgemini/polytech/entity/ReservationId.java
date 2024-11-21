@@ -11,8 +11,8 @@ import lombok.Setter;
 @Embeddable
 public class ReservationId {
     @Column(name="jeux_id", length=50, nullable=false, unique=false)
-    private Integer jeuxId;
+    private Integer jeux_id;
 
     @Column(name="utilisateur_id", length=50, nullable=false, unique=false)
-    private Integer utilisateurId;
+    private Integer utilisateur_id;
 }

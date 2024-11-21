@@ -1,6 +1,8 @@
 package com.capgemini.polytech.service;
 
 import com.capgemini.polytech.entity.Utilisateur;
+import com.capgemini.polytech.exception.JeuNotFoundException;
+import com.capgemini.polytech.exception.UtilisateurNotFoundException;
 import com.capgemini.polytech.repository.UtilisateurRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -18,7 +20,7 @@ public class UtilisateurService {
     }
 
     public Utilisateur getById(Integer id) {
-        return utilisateurRepository.findById(id).orElseThrow();
+        return utilisateurRepository.findById(id).orElseThrow(() -> new UtilisateurNotFoundException(id));
     }
 
     public Utilisateur createUtilisateur(Utilisateur utilisateur) {
@@ -28,7 +30,7 @@ public class UtilisateurService {
     public Utilisateur updateUtilisateur(Integer id, Utilisateur utilisateur) {
         return this.utilisateurRepository.findById(id).map(
                 e -> this.utilisateurRepository.save(utilisateur)
-        ).orElseThrow();
+        ).orElseThrow(() -> new UtilisateurNotFoundException(id));
     }
 
     public void deleteUtilisateur(Integer id) {
@@ -37,7 +39,7 @@ public class UtilisateurService {
                     this.utilisateurRepository.delete(e);
                     return e;
                 }
-        ).orElseThrow();
+        ).orElseThrow(() -> new UtilisateurNotFoundException(id));
     }
 
 

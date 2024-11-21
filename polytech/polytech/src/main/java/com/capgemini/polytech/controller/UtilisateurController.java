@@ -1,7 +1,9 @@
 package com.capgemini.polytech.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.capgemini.polytech.DTO.UtilisateurDTO;
+import com.capgemini.polytech.Mapper.UtilisateurMapper;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

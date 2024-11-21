@@ -1,5 +1,6 @@
 package com.capgemini.polytech.service;
 
+import com.capgemini.polytech.exception.JeuNotFoundException;
 import com.capgemini.polytech.repository.JeuRepository;
 import com.capgemini.polytech.entity.Jeu;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class JeuService {
     }
 
     public Jeu getById(Integer id) {
-        return jeuRepository.findById(id).orElseThrow();
+        return jeuRepository.findById(id).orElseThrow(() -> new JeuNotFoundException(id));
     }
 
     public Jeu createJeu(Jeu jeu) {
@@ -28,7 +29,7 @@ public class JeuService {
     public Jeu updateJeu(Integer id, Jeu jeu) {
         return this.jeuRepository.findById(id).map(
                 e -> this.jeuRepository.save(jeu)
-        ).orElseThrow();
+        ).orElseThrow(() -> new JeuNotFoundException(id));
     }
 
     public void deleteJeu(Integer id) {
@@ -37,7 +38,7 @@ public class JeuService {
                     this.jeuRepository.delete(e);
                     return e;
                 }
-        ).orElseThrow();
+        ).orElseThrow(() -> new JeuNotFoundException(id));
     }
 
 

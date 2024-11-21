@@ -5,8 +5,8 @@ import com.capgemini.polytech.Mapper.ReservationMapper;
 import com.capgemini.polytech.entity.Reservation;
 import com.capgemini.polytech.service.ReservationService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,18 +25,18 @@ public class ReservationController {
         this.reservationMapper = reservationMapper;
     }
 
-    //GET localhost:8080/Controller
+    //GET localhost:8080/Reservation
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<ReservationDTO> getListReservation() {
-    List<ReservationDTO> listReservationDTO = new ArrayList<>();
-    List<Reservation> listReservations = this.reservationService.getList();
-    for (Reservation reservation : listReservations) {
-        listReservationDTO.add(this.reservationMapper.toDTO(reservation));
+        List<ReservationDTO> listReservationDTO = new ArrayList<>();
+        List<Reservation> listReservations = this.reservationService.getList();
+        for (Reservation reservation : listReservations) {
+            listReservationDTO.add(this.reservationMapper.toDTO(reservation));
     }
     return listReservationDTO;
     }
 
-    //GET localhost:8080/Controller/1
+    //GET localhost:8080/Reservation/1
     @GetMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ReservationDTO getByIdReservation(@PathVariable Integer id) {
         return this.reservationMapper.toDTO(this.reservationService.getById(id));
@@ -54,7 +54,7 @@ public class ReservationController {
         this.reservationService.updateReservation(id, this.reservationMapper.toEntity(newReservation));
     }
 
-    //DELETE localhost:8080/Controller?id=1
+    //DELETE localhost:8080/Reservation?id=1
     @DeleteMapping
     public void deleteReservation(Integer id) {
         this.reservationService.deleteReservation(id);
