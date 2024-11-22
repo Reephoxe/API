@@ -23,6 +23,7 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
 
         UtilisateurDTO.UtilisateurDTOBuilder utilisateurDTO = UtilisateurDTO.builder();
 
+        utilisateurDTO.id( utilisateur.getId() );
         utilisateurDTO.nom( utilisateur.getNom() );
         utilisateurDTO.prenom( utilisateur.getPrenom() );
         utilisateurDTO.mail( utilisateur.getMail() );
@@ -40,6 +41,7 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
 
         Utilisateur.UtilisateurBuilder utilisateur = Utilisateur.builder();
 
+        utilisateur.id( utilisateurDTO.getId() );
         utilisateur.nom( utilisateurDTO.getNom() );
         utilisateur.prenom( utilisateurDTO.getPrenom() );
         utilisateur.mail( utilisateurDTO.getMail() );

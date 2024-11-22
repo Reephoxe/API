@@ -46,23 +46,23 @@ public class JeuController  {
         return this.jeuMapper.toDTO(this.jeuService.getById(id));
     }
 
-    //
+    //POST localhost:8080/Jeu avec JSON body
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<JeuDTO> createJeu(@RequestBody JeuDTO jeuDTO){
-        this.jeuService.createJeu(this.jeuMapper.toEntity(jeuDTO));
-        return new ResponseEntity<>(jeuDTO, HttpStatus.CREATED);
+        Jeu jeuCreate = this.jeuService.createJeu(this.jeuMapper.toEntity(jeuDTO));
+        return new ResponseEntity<>(jeuMapper.toDTO(jeuCreate), HttpStatus.CREATED);
     }
 
     //
     @PutMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<JeuDTO> updateJeu(@PathVariable Integer id, JeuDTO jeuDTO){
-        this.jeuService.updateJeu(id, this.jeuMapper.toEntity(jeuDTO));
-        return new ResponseEntity<>(jeuDTO, HttpStatus.OK);
+    public ResponseEntity<JeuDTO> updateJeu(@PathVariable Integer id, @RequestBody JeuDTO jeuDTO){
+        Jeu jeuUpdate = this.jeuService.updateJeu(id, this.jeuMapper.toEntity(jeuDTO));
+        return new ResponseEntity<>(jeuMapper.toDTO(jeuUpdate), HttpStatus.OK);
     }
 
-    //DELETE localhost:8080/Jeu?id=38
-    @DeleteMapping
-    public void deleteJeu(@RequestParam Integer id){
+    //DELETE localhost:8080/Jeu/38
+    @DeleteMapping(value = "/{id:\\d+}")
+    public void deleteJeu(@PathVariable Integer id){
         this.jeuService.deleteJeu(id);
     }
 
