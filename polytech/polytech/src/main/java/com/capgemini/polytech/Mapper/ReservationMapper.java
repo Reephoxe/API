@@ -10,7 +10,6 @@ public interface ReservationMapper {
 
     ReservationDTO toDTO(Reservation reservation);
 
-
     Reservation toEntity(ReservationDTO reservationDTO);
 }
 

@@ -53,7 +53,7 @@ public class JeuController  {
         return new ResponseEntity<>(jeuMapper.toDTO(jeuCreate), HttpStatus.CREATED);
     }
 
-    //
+    //PUT localhost:8080/Jeu/160
     @PutMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<JeuDTO> updateJeu(@PathVariable Integer id, @RequestBody JeuDTO jeuDTO){
         Jeu jeuUpdate = this.jeuService.updateJeu(id, this.jeuMapper.toEntity(jeuDTO));
