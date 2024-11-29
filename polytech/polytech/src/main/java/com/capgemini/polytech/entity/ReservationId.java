@@ -15,4 +15,12 @@ public class ReservationId {
 
     @Column(name="utilisateur_id", length=50, nullable=false, unique=false)
     private Integer utilisateur_id;
+
+    public ReservationId(Integer utilisateurId, Integer jeuxId) {
+        this.utilisateur_id = utilisateurId;
+        this.jeux_id = jeuxId;
+    }
+
+    public ReservationId() {
+    }
 }
