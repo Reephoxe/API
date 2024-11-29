@@ -1,11 +1,16 @@
 package com.capgemini.polytech.controller;
 
 import com.capgemini.polytech.DTO.ReservationDTO;
+import com.capgemini.polytech.DTO.UtilisateurDTO;
 import com.capgemini.polytech.Mapper.ReservationMapper;
 import com.capgemini.polytech.entity.Reservation;
+import com.capgemini.polytech.entity.ReservationId;
+import com.capgemini.polytech.entity.Utilisateur;
 import com.capgemini.polytech.service.ReservationService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -44,22 +49,22 @@ public class ReservationController {
 
     //
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public void createReservation(ReservationDTO newReservation) {
-        this.reservationService.createReservation(this.reservationMapper.toEntity(newReservation));
+    public ResponseEntity<ReservationDTO> createReservation(@RequestBody ReservationDTO reservationDTO){
+        Reservation reservationCreate = this.reservationService.createReservation(this.reservationMapper.toEntity(reservationDTO));
+        return new ResponseEntity<>(reservationMapper.toDTO(reservationCreate), HttpStatus.CREATED);
     }
 
     //
     @PutMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public void updateReservation(@PathVariable Integer id, ReservationDTO newReservation) {
-        this.reservationService.updateReservation(id, this.reservationMapper.toEntity(newReservation));
+    public ResponseEntity<ReservationDTO> updateReservation(@PathVariable Integer id, ReservationDTO reservationDTO){
+        Reservation reservationUpdate = this.reservationService.updateReservation(id, this.reservationMapper.toEntity(reservationDTO));
+        return new ResponseEntity<>(reservationMapper.toDTO(reservationUpdate), HttpStatus.OK);
     }
 
     //DELETE localhost:8080/Reservation?id=1
-    @DeleteMapping
-    public void deleteReservation(Integer id) {
+    @DeleteMapping(value = "/{id:\\d+}")
+    public void deleteJeu(@PathVariable Integer id){
         this.reservationService.deleteReservation(id);
     }
-
-
 
 }
