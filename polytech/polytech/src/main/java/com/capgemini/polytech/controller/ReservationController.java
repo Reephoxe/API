@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
-@RequestMapping("/Reservation")
+@RequestMapping("/reservation")
 public class ReservationController {
 
     private ReservationService reservationService;
@@ -30,7 +30,7 @@ public class ReservationController {
         this.reservationMapper = reservationMapper;
     }
 
-    //GET localhost:8080/Reservation
+    //GET localhost:8080/reservation
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<ReservationDTO> getListReservation() {
         List<ReservationDTO> listReservationDTO = new ArrayList<>();
@@ -41,7 +41,7 @@ public class ReservationController {
     return listReservationDTO;
     }
 
-    //GET localhost:8080/Reservation/1
+    //GET localhost:8080/reservation/1
     @GetMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ReservationDTO getByIdReservation(@PathVariable Integer id) {
         return this.reservationMapper.toDTO(this.reservationService.getById(id));
@@ -61,7 +61,7 @@ public class ReservationController {
         return new ResponseEntity<>(reservationMapper.toDTO(reservationUpdate), HttpStatus.OK);
     }
 
-    //DELETE localhost:8080/Reservation?id=1
+    //DELETE localhost:8080/reservation/1
     @DeleteMapping(value = "/{id:\\d+}")
     public void deleteJeu(@PathVariable Integer id){
         this.reservationService.deleteReservation(id);
