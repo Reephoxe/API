@@ -1,8 +1,6 @@
 package com.capgemini.polytech.service;
 
-import com.capgemini.polytech.entity.Jeu;
 import com.capgemini.polytech.entity.Utilisateur;
-import com.capgemini.polytech.exception.JeuNotFoundException;
 import com.capgemini.polytech.exception.UtilisateurNotFoundException;
 import com.capgemini.polytech.repository.UtilisateurRepository;
 import org.springframework.stereotype.Service;
@@ -35,7 +33,7 @@ public class UtilisateurService {
             existingUtilisateur.setMail(updatedUtilisateur.getMail());
             existingUtilisateur.setPassword(updatedUtilisateur.getPassword());
             existingUtilisateur.setUsername(updatedUtilisateur.getUsername());
-            return this.utilisateurRepository.save(updatedUtilisateur);
+            return this.utilisateurRepository.save(existingUtilisateur);
     }
 
     public void deleteUtilisateur(Integer id) {

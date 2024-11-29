@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(JeuNotFoundException.class)
-    public ResponseEntity<String> handleJeuNotFoundException(JeuNotFoundException ex) {
+    @ExceptionHandler(JeuxNotFoundException.class)
+    public ResponseEntity<String> handleJeuNotFoundException(JeuxNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 

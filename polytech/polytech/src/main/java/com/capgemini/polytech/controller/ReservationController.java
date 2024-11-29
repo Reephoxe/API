@@ -1,14 +1,12 @@
 package com.capgemini.polytech.controller;
 
-import com.capgemini.polytech.DTO.JeuDTO;
+import com.capgemini.polytech.DTO.ReservationCreationDTO;
 import com.capgemini.polytech.DTO.ReservationDTO;
-import com.capgemini.polytech.DTO.UtilisateurDTO;
 import com.capgemini.polytech.Mapper.ReservationMapper;
-import com.capgemini.polytech.entity.Jeu;
 import com.capgemini.polytech.entity.Reservation;
 import com.capgemini.polytech.entity.ReservationId;
-import com.capgemini.polytech.entity.Utilisateur;
 import com.capgemini.polytech.service.ReservationService;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @CrossOrigin(origins = "http://localhost:4200")
@@ -44,29 +41,50 @@ public class ReservationController {
     return listReservationDTO;
     }
 
-    //GET localhost:8080/reservation/1
-    @GetMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ReservationDTO getByIdReservation(@PathVariable Integer id) {
+    //GET localhost:8080/reservation/id avec JSON body
+    /*{
+        "utilisateur_id" : "4",
+        "jeux_id" : "124"
+    }*/
+    @GetMapping(value="id", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ReservationDTO getByIdReservation(@RequestBody ReservationId id) {
         return this.reservationMapper.toDTO(this.reservationService.getById(id));
     }
 
     //POST localhost:8080/reservation avec JSON body
+    /*{
+        "utilisateur_id" : "4",
+        "jeux_id" : "124",
+        "reservation" : 4
+    }*/
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<ReservationDTO> createReservation(@RequestBody ReservationDTO reservationDTO){
-        Reservation reservationCreate = this.reservationService.createReservation(this.reservationMapper.toEntity(reservationDTO));
+    public ResponseEntity<ReservationDTO> createReservation(@RequestBody ReservationCreationDTO reservationCreationDTO){
+        Reservation reservationCreate = this.reservationService.createReservation(this.reservationMapper.toEntity(reservationCreationDTO));
         return new ResponseEntity<>(reservationMapper.toDTO(reservationCreate), HttpStatus.CREATED);
     }
 
-    //
-    @PutMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<ReservationDTO> updateReservation(@PathVariable Integer id, @RequestBody ReservationDTO reservationDTO){
-        Reservation reservationUpdate = this.reservationService.updateReservation(id, this.reservationMapper.toEntity(reservationDTO));
+    //PUT localhost:8080/reservation avec JSON body
+    /*{
+        "utilisateur_id": 2,
+        "jeux_id": 46,
+        "reservation" : 8
+    }*/
+    @PutMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<ReservationDTO> updateReservation(@RequestBody ReservationCreationDTO reservationCreationDTO){
+
+        ReservationId id = new ReservationId(reservationCreationDTO.getUtilisateur_id(), reservationCreationDTO.getJeux_id());
+
+        Reservation reservationUpdate = this.reservationService.updateReservation(id, this.reservationMapper.toEntity(reservationCreationDTO));
         return new ResponseEntity<>(reservationMapper.toDTO(reservationUpdate), HttpStatus.OK);
     }
 
-    //DELETE localhost:8080/reservation/1
-    @DeleteMapping(value = "/{id:\\d+}")
-    public void deleteJeu(@PathVariable Integer id){
+    //DELETE localhost:8080/reservation avec JSON body
+    /*{
+        "utilisateur_id" : "4",
+        "jeux_id" : "124"
+    }*/
+    @DeleteMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public void deleteReservation(@RequestBody ReservationId id){
         this.reservationService.deleteReservation(id);
     }
 

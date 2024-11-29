@@ -44,14 +44,28 @@ public class UtilisateurController {
         return this.utilisateurMapper.toDTO(this.utilisateurService.getById(id));
     }
 
-    //POST localhost:8080/utilisateur avec JSON body (dont le mdp)
+    //POST localhost:8080/utilisateur avec JSON body
+    /*{
+        "nom": "Violet",
+        "prenom" : "Martin",
+        "mail": "violet.martin@etu.univ-tours.fr",
+        "password": "MDP123",
+        "username": "Reephoxe"
+    }*/
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UtilisateurDTO> createUtilisateur(@RequestBody UtilisateurCreationDTO utilisateurCreationDTO){
         Utilisateur utilisateurCreate = this.utilisateurService.createUtilisateur(this.utilisateurMapper.toEntity(utilisateurCreationDTO));
         return new ResponseEntity<>(utilisateurMapper.toDTO(utilisateurCreate), HttpStatus.CREATED);
     }
 
-    //PUT localhost:8080/utilisateur/1 avec JSON body (dont le mdp)
+    //PUT localhost:8080/utilisateur/1 avec JSON body
+    /*{
+        "nom": "Violet",
+        "prenom" : "Martin",
+        "mail": "violet.martin@etu.univ-tours.fr",
+        "password": "MDP123",
+        "username": "Reephoxe"
+    }*/
     @PutMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UtilisateurDTO> updateUtilisateur(@PathVariable Integer id,@RequestBody UtilisateurCreationDTO utilisateurCreationDTO){
         Utilisateur utilisateurUpdate = this.utilisateurService.updateUtilisateur(id, this.utilisateurMapper.toEntity(utilisateurCreationDTO));

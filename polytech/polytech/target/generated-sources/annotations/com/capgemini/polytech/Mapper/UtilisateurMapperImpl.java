@@ -103,6 +103,8 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
 
         ReservationDTO.ReservationDTOBuilder reservationDTO = ReservationDTO.builder();
 
+        reservationDTO.reservation( reservation.getReservation() );
+
         return reservationDTO.build();
     }
 
@@ -125,6 +127,10 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         }
 
         Reservation.ReservationBuilder reservation = Reservation.builder();
+
+        if ( reservationDTO.getReservation() != null ) {
+            reservation.reservation( reservationDTO.getReservation() );
+        }
 
         return reservation.build();
     }

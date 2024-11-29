@@ -21,7 +21,7 @@ public class Reservation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "jeux_id", nullable = false, insertable=false, updatable=false)//jeux_id
-    private Jeu jeux;
+    private Jeux jeux;
 
     @Column(name="reservation", length=50, nullable=false, unique=false)
     private int reservation;
