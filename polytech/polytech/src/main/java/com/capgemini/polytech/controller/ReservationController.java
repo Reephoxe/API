@@ -1,8 +1,10 @@
 package com.capgemini.polytech.controller;
 
+import com.capgemini.polytech.DTO.JeuDTO;
 import com.capgemini.polytech.DTO.ReservationDTO;
 import com.capgemini.polytech.DTO.UtilisateurDTO;
 import com.capgemini.polytech.Mapper.ReservationMapper;
+import com.capgemini.polytech.entity.Jeu;
 import com.capgemini.polytech.entity.Reservation;
 import com.capgemini.polytech.entity.ReservationId;
 import com.capgemini.polytech.entity.Utilisateur;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/reservation")
 public class ReservationController {
@@ -47,7 +50,7 @@ public class ReservationController {
         return this.reservationMapper.toDTO(this.reservationService.getById(id));
     }
 
-    //
+    //POST localhost:8080/reservation avec JSON body
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ReservationDTO> createReservation(@RequestBody ReservationDTO reservationDTO){
         Reservation reservationCreate = this.reservationService.createReservation(this.reservationMapper.toEntity(reservationDTO));
@@ -56,7 +59,7 @@ public class ReservationController {
 
     //
     @PutMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<ReservationDTO> updateReservation(@PathVariable Integer id, ReservationDTO reservationDTO){
+    public ResponseEntity<ReservationDTO> updateReservation(@PathVariable Integer id, @RequestBody ReservationDTO reservationDTO){
         Reservation reservationUpdate = this.reservationService.updateReservation(id, this.reservationMapper.toEntity(reservationDTO));
         return new ResponseEntity<>(reservationMapper.toDTO(reservationUpdate), HttpStatus.OK);
     }

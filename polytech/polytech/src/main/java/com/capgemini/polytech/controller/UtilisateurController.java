@@ -14,6 +14,7 @@ import java.util.List;
 import com.capgemini.polytech.service.UtilisateurService;
 import com.capgemini.polytech.entity.Utilisateur;
 @Slf4j
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/utilisateur")
 public class UtilisateurController {

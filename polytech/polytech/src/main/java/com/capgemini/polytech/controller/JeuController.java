@@ -17,6 +17,7 @@ import java.util.List;
 
 
 @Slf4j
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/jeu")
 public class JeuController  {
