@@ -1,5 +1,6 @@
 package com.capgemini.polytech.service;
 
+import com.capgemini.polytech.entity.Jeu;
 import com.capgemini.polytech.entity.Utilisateur;
 import com.capgemini.polytech.exception.JeuNotFoundException;
 import com.capgemini.polytech.exception.UtilisateurNotFoundException;
@@ -27,10 +28,14 @@ public class UtilisateurService {
         return this.utilisateurRepository.save(utilisateur);
     }
 
-    public Utilisateur updateUtilisateur(Integer id, Utilisateur utilisateur) {
-        return this.utilisateurRepository.findById(id).map(
-                e -> this.utilisateurRepository.save(utilisateur)
-        ).orElseThrow(() -> new UtilisateurNotFoundException(id));
+    public Utilisateur updateUtilisateur(Integer id, Utilisateur updatedUtilisateur) {
+        Utilisateur existingUtilisateur = utilisateurRepository.findById(id).orElseThrow(() -> new UtilisateurNotFoundException(id));;
+            existingUtilisateur.setNom(updatedUtilisateur.getNom());
+            existingUtilisateur.setPrenom(updatedUtilisateur.getPrenom());
+            existingUtilisateur.setMail(updatedUtilisateur.getMail());
+            existingUtilisateur.setPassword(updatedUtilisateur.getPassword());
+            existingUtilisateur.setUsername(updatedUtilisateur.getUsername());
+            return this.utilisateurRepository.save(updatedUtilisateur);
     }
 
     public void deleteUtilisateur(Integer id) {

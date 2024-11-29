@@ -1,6 +1,7 @@
 package com.capgemini.polytech.Mapper;
 
 import com.capgemini.polytech.DTO.ReservationDTO;
+import com.capgemini.polytech.DTO.UtilisateurCreationDTO;
 import com.capgemini.polytech.DTO.UtilisateurDTO;
 import com.capgemini.polytech.entity.Reservation;
 import com.capgemini.polytech.entity.Utilisateur;
@@ -34,6 +35,28 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
     }
 
     @Override
+    public UtilisateurCreationDTO toDTOCreation(Utilisateur utilisateur) {
+        if ( utilisateur == null ) {
+            return null;
+        }
+
+        UtilisateurCreationDTO.UtilisateurCreationDTOBuilder utilisateurCreationDTO = UtilisateurCreationDTO.builder();
+
+        utilisateurCreationDTO.id( utilisateur.getId() );
+        utilisateurCreationDTO.nom( utilisateur.getNom() );
+        utilisateurCreationDTO.prenom( utilisateur.getPrenom() );
+        utilisateurCreationDTO.mail( utilisateur.getMail() );
+        utilisateurCreationDTO.username( utilisateur.getUsername() );
+        List<Reservation> list = utilisateur.getReservations();
+        if ( list != null ) {
+            utilisateurCreationDTO.reservations( new ArrayList<Reservation>( list ) );
+        }
+        utilisateurCreationDTO.password( utilisateur.getPassword() );
+
+        return utilisateurCreationDTO.build();
+    }
+
+    @Override
     public Utilisateur toEntity(UtilisateurDTO utilisateurDTO) {
         if ( utilisateurDTO == null ) {
             return null;
@@ -47,6 +70,28 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         utilisateur.mail( utilisateurDTO.getMail() );
         utilisateur.username( utilisateurDTO.getUsername() );
         utilisateur.reservations( reservationDTOListToReservationList( utilisateurDTO.getReservations() ) );
+
+        return utilisateur.build();
+    }
+
+    @Override
+    public Utilisateur toEntity(UtilisateurCreationDTO utilisateurCreationDTO) {
+        if ( utilisateurCreationDTO == null ) {
+            return null;
+        }
+
+        Utilisateur.UtilisateurBuilder utilisateur = Utilisateur.builder();
+
+        utilisateur.id( utilisateurCreationDTO.getId() );
+        utilisateur.nom( utilisateurCreationDTO.getNom() );
+        utilisateur.prenom( utilisateurCreationDTO.getPrenom() );
+        utilisateur.mail( utilisateurCreationDTO.getMail() );
+        utilisateur.password( utilisateurCreationDTO.getPassword() );
+        utilisateur.username( utilisateurCreationDTO.getUsername() );
+        List<Reservation> list = utilisateurCreationDTO.getReservations();
+        if ( list != null ) {
+            utilisateur.reservations( new ArrayList<Reservation>( list ) );
+        }
 
         return utilisateur.build();
     }

@@ -18,7 +18,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/Jeu")
+@RequestMapping("/jeu")
 public class JeuController  {
 
     private JeuMapper jeuMapper;
@@ -29,7 +29,7 @@ public class JeuController  {
         this.jeuService = jeuService;
     }
 
-    //GET localhost:8080/Jeu
+    //GET localhost:8080/jeu
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<JeuDTO> getListJeu(){
         List<JeuDTO> listJeuDTO = new ArrayList<>();
@@ -40,27 +40,27 @@ public class JeuController  {
         return listJeuDTO;
     }
 
-    //GET localhost:8080/Jeu/39
+    //GET localhost:8080/jeu/39
     @GetMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public JeuDTO getByIdJeu(@PathVariable Integer id){
         return this.jeuMapper.toDTO(this.jeuService.getById(id));
     }
 
-    //POST localhost:8080/Jeu avec JSON body
+    //POST localhost:8080/jeu avec JSON body
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<JeuDTO> createJeu(@RequestBody JeuDTO jeuDTO){
         Jeu jeuCreate = this.jeuService.createJeu(this.jeuMapper.toEntity(jeuDTO));
         return new ResponseEntity<>(jeuMapper.toDTO(jeuCreate), HttpStatus.CREATED);
     }
 
-    //PUT localhost:8080/Jeu/160
+    //PUT localhost:8080/jeu/160
     @PutMapping(value = "/{id:\\d+}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<JeuDTO> updateJeu(@PathVariable Integer id, @RequestBody JeuDTO jeuDTO){
         Jeu jeuUpdate = this.jeuService.updateJeu(id, this.jeuMapper.toEntity(jeuDTO));
         return new ResponseEntity<>(jeuMapper.toDTO(jeuUpdate), HttpStatus.OK);
     }
 
-    //DELETE localhost:8080/Jeu/38
+    //DELETE localhost:8080/jeu/38
     @DeleteMapping(value = "/{id:\\d+}")
     public void deleteJeu(@PathVariable Integer id){
         this.jeuService.deleteJeu(id);
